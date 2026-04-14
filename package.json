@@ -1,0 +1,21 @@
+{
+  "name": "specforge",
+  "version": "0.1.0",
+  "description": "Multi-agent architectural specification generator",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "spec": "tsx src/index.ts spec"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
