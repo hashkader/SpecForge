@@ -1,5 +1,5 @@
-import { OrchestrationPlan, ResearchContext, ArchitecturalProposal } from '../types/index.ts';
-import { logger } from '../utils/logger.ts';
+import { OrchestrationPlan, ResearchContext, ArchitecturalProposal } from '../types/index.js';
+import { logger } from '../utils/logger.js';
 
 export async function runArchitectA(
   plan: OrchestrationPlan,
@@ -14,18 +14,25 @@ export async function runArchitectA(
     isRevision ? 'Revising proposal based on Architect B critique...' : 'Generating initial proposal...'
   );
 
-  logger.input('ARCHITECT_A', 'OrchestrationPlan + ResearchContext', {
+  logger.input('ARCHITECT_A', 'Briefing', {
     featureSummary: plan.featureSummary,
     architecturalConcerns: plan.architecturalConcerns,
-    existingPatterns: research.existingPatterns,
-    relevantFiles: research.relevantFiles,
+    priorArtCount: research.priorArt.length,
+    relevantFilesCount: research.relevantFiles.length,
+    existingPatternsCount: research.existingPatterns.length,
+    researchSummary: research.summary.slice(0, 200) + '...',
+    keyFindings: research.priorArt.slice(0, 3).map(f => ({
+      claim: f.claim,
+      source: f.source,
+      confidence: f.confidence,
+    })),
   });
 
   if (previousCritique) {
     logger.input('ARCHITECT_A', 'Critique to address', previousCritique);
   }
 
-  // STUB: Phase 3 replaces this with a real Claude API call
+  // STUB: Phase 3 replaces with a real Claude API call
   const proposal: ArchitecturalProposal = {
     title: `Architecture proposal: ${plan.featureSummary}`,
     approach:
@@ -36,7 +43,7 @@ export async function runArchitectA(
       {
         name: 'SplitPaymentService',
         responsibility: 'Orchestrate split payment logic and PayFast API calls',
-        technology: 'TypeScript class extending existing PaymentService',
+        technology: 'TypeScript class using composition with existing PaymentService',
       },
       {
         name: 'PayFastAdapter',
@@ -45,7 +52,7 @@ export async function runArchitectA(
       },
       {
         name: 'WebhookHandler',
-        responsibility: 'Receive and process PayFast payment confirmation webhooks',
+        responsibility: 'Receive and process PayFast ITN webhook notifications',
         technology: 'Extends existing webhook handler pattern',
       },
     ],
@@ -63,6 +70,7 @@ export async function runArchitectA(
       'Existing PaymentService is injectable / mockable',
       'Webhook infrastructure is already deployed',
       'PayFast sandbox credentials are available for testing',
+      'Maximum 5 split recipients per transaction (per PayFast API limits)',
     ],
     estimatedComplexity: 'medium',
   };

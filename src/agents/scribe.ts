@@ -1,5 +1,5 @@
-import { ArchitecturalProposal, Critique, ValidationReport, ADR } from '../types/index.ts';
-import { logger } from '../utils/logger.ts';
+import { ArchitecturalProposal, Critique, ValidationReport, ADR } from '../types/index.js';
+import { logger } from '../utils/logger.js';
 
 export async function runScribe(
   proposal: ArchitecturalProposal,
@@ -10,7 +10,7 @@ export async function runScribe(
   logger.divider('SCRIBE');
   logger.agent('SCRIBE', `Generating ADR — debate took ${debateRounds} round(s)...`);
 
-  // STUB: Phase 6 replaces this with a real Claude call + file write to /output
+  // STUB: Phase 6 replaces with a real Claude call + file write to /output
   const adr: ADR = {
     title: proposal.title,
     date: new Date().toISOString().split('T')[0],
@@ -25,10 +25,11 @@ export async function runScribe(
       ...validation.warnings,
     ],
     alternativesConsidered: [
-      '[STUB] Phase 4 will populate real alternatives from the debate rounds.',
+      '[STUB] Phase 4 will populate real alternatives from debate rounds.',
       `Architect B feedback: "${critique.overallFeedback}"`,
     ],
     debateRounds,
+    conflicts: critique.conflicts,
   };
 
   logger.output('SCRIBE', 'ADR', adr);
