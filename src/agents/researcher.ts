@@ -120,7 +120,7 @@ async function runWebResearch(
 
   const response = await client.messages.create({
     model: 'claude-sonnet-4-5-20250929',
-    max_tokens: 4096,
+    max_tokens: 8192,
     system: `You are SpecForge's Researcher agent. Use web_search to find accurate, 
 sourced information to help an architect design a technical solution.
 Search for every research question provided. Use official documentation where possible.`,
